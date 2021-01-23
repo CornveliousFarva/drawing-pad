@@ -1,27 +1,21 @@
 // Initial variable declarations
-const canvas = document.getElementById('canvas')
-const increaseBtn = document.getElementById('increase')
-const decreaseBtn = document.getElementById('decrease')
-const clearBtn = document.getElementById('clear')
-const sizeBtn = document.getElementById('size')
-const colorEl = document.getElementById('color')
+const canvas = document.getElementById('canvas');
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
+const sizeEL = document.getElementById('size');
+const colorEl = document.getElementById('color');
+const clearEl = document.getElementById('clear');
 
-// Canvas context
-const ctx = canvas.getContext('2d')
+// Initial setup of the program when it starts.
+const ctx = canvas.getContext('2d');
 
-// Initial setup of the app when the user opens it. So if they were do just open the app and draw, these would be the initial parameters they would be working with.
-
-// Initial size
-let size = 10 
-// Initial mouse button setup
+let size = 10
 let isPressed = false
-//Initial color
 let color = 'black'
-//Initial axes
 let x
 let y
 
-// Event listener for when the mouse button is held down
+// Event listener when the mouse is held down inside of the canvas
 canvas.addEventListener('mousedown', (e) => {
     isPressed = true
 
@@ -29,7 +23,7 @@ canvas.addEventListener('mousedown', (e) => {
     y = e.offsetY
 })
 
-// Event listener for when the mouse button isn't held down
+// Event listener when the mouse isn't held down inside of the canvas
 canvas.addEventListener('mouseup', (e) => {
     isPressed = false
 
@@ -37,7 +31,7 @@ canvas.addEventListener('mouseup', (e) => {
     y = undefined
 })
 
-// Event listener for when the mouse is being moved around
+// Event listener when someone is moving the mouse around
 canvas.addEventListener('mousemove', (e) => {
     if(isPressed) {
         const x2 = e.offsetX
@@ -51,53 +45,53 @@ canvas.addEventListener('mousemove', (e) => {
     }
 })
 
-// Function to draw and fill a circle
-function drawCircle (x, y){
+// Function to draw shapes. A circle is used as an example
+function drawCircle(x, y) {
     ctx.beginPath();
-    ctx.arc(x, y, size, 0, Math.PI *2)
+    ctx.arc(x, y, size, 0, Math.PI * 2)
     ctx.fillStyle = color
     ctx.fill()
 }
 
 // Function to draw a line
-function drawLine (x1, y1, x2, y2){
+function drawLine(x1, y1, x2, y2) {
     ctx.beginPath()
     ctx.moveTo(x1, y1)
     ctx.lineTo(x2, y2)
     ctx.strokeStyle = color
     ctx.lineWidth = size * 2
-    ctx.stroke
+    ctx.stroke()
 }
 
 // Function to update the size on the screen
-function updateSizeOnScreen(){
-    size.innerText = size
+function updateSizeOnScreen() {
+    sizeEL.innerText = size
 }
 
-// Event listener to increase size
-increaseBtn.addEventListener('click', (e) => {
+// Increase button event
+increaseBtn.addEventListener('click', () => {
     size += 5
 
-    if(size > 50){
+    if(size > 50) {
         size = 50
     }
 
     updateSizeOnScreen()
 })
 
-// Event listener to decrease size
+// Decrease button event
 decreaseBtn.addEventListener('click', () => {
     size -= 5
 
-    if(size < 5){
+    if(size < 5) {
         size = 5
     }
 
     updateSizeOnScreen()
 })
 
-// Coolor event listener
+// Color event
 colorEl.addEventListener('change', (e) => color = e.target.value)
 
-// Clear event listener
-clearBtn.addEventListener('click', () => ctx.cleaRect(0, 0, canvas.clientWidth, canvas.height))
+// Clear event
+clearEl.addEventListener('click', () => ctx.clearRect(0,0, canvas.width, canvas.height))
